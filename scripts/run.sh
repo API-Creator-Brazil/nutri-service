@@ -1,21 +1,20 @@
 #!/bin/bash
 
 setup() {
-    yarn
     docker compose up -d
     sleep 1
-    npx prisma migrate dev
 }
 
 cleanup() {
     docker compose down
 }
 
-run() {
-    npx jest --runInBand
+initDocker() {
+    docker build --network host -t nutri .
+    docker run --network host --rm nutri
 }
 
 trap cleanup EXIT
 setup
-run
+initDocker
 cleanup

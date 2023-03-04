@@ -65,10 +65,10 @@ input CreateUserProfileInput {
   name: FullName!
 
   """User email"""
-  email: Phone!
+  email: Email!
 
   """User phone"""
-  phone: CPF!
+  phone: Phone!
 
   """User cpf"""
   cpf: CPF
@@ -82,10 +82,10 @@ input UpdateUserProfileInput {
   name: FullName!
 
   """User email"""
-  email: Phone!
+  email: Email!
 
   """User phone"""
-  phone: CPF!
+  phone: Phone!
 
   """User cpf"""
   cpf: CPF
