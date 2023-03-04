@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core'
 import { MainModule } from './main.module'
 import { PrismaService } from './PrismaService/PrismaService'
 
-async function bootstrap() {
+const bootstrap = async () => {
   const app = await NestFactory.create(MainModule)
 
   // Graceful prisma client shutdown
@@ -13,4 +13,4 @@ async function bootstrap() {
   await app.listen(3000)
 }
 
-bootstrap()
+bootstrap().catch(console.error)

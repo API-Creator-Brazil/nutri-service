@@ -13,36 +13,36 @@ export class UserProfileResolver {
   ) {}
 
   @Mutation(() => UserProfile)
-  createNutritionistProfile(
+  async createNutritionistProfile(
     @Args('createNutritionistProfileInput')
     createUserProfileInput: CreateUserProfileInput,
   ) {
-    return this.nutritionistProfileService.create(createUserProfileInput)
+    return await this.nutritionistProfileService.create(createUserProfileInput)
   }
 
   @Query(() => [UserProfile], { name: 'userProfile' })
-  findAll() {
-    return this.userProfileService.findAll()
+  async findAll() {
+    return await this.userProfileService.findAll()
   }
 
   @Query(() => UserProfile, { name: 'userProfile' })
-  findOne(@Args('id', { type: () => Int }) id: string) {
-    return this.nutritionistProfileService.findOne(id)
+  async findOne(@Args('id', { type: () => Int }) id: string) {
+    return await this.nutritionistProfileService.findOne(id)
   }
 
   @Mutation(() => UserProfile)
-  updateUserProfile(
+  async updateUserProfile(
     @Args('updateUserProfileInput')
     updateUserProfileInput: UpdateUserProfileInput,
   ) {
-    return this.userProfileService.updatePersonalData(
+    return await this.userProfileService.updatePersonalData(
       updateUserProfileInput.id,
       updateUserProfileInput,
     )
   }
 
   @Mutation(() => UserProfile)
-  removeUserProfile(@Args('id', { type: () => String }) id: string) {
-    return this.userProfileService.remove(id)
+  async removeUserProfile(@Args('id', { type: () => String }) id: string) {
+    return await this.userProfileService.remove(id)
   }
 }

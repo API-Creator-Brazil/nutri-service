@@ -8,7 +8,7 @@ import { transformCreateUserInputToPrismaCreateUserPayload } from '../dataTransf
 
 @Injectable()
 export class NutritionistProfileService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(
     createUserProfileInput: CreateUserProfileInput,
@@ -46,7 +46,7 @@ export class NutritionistProfileService {
       include: { personalData: true },
     })
 
-    if (!user) {
+    if (user === null) {
       return null
     }
 

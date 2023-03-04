@@ -13,6 +13,8 @@ module.exports = {
   },
   ignorePatterns: ['.eslintrc.js'],
   rules: {
+    '@typescript-eslint/array-type': 'off',
+    '@typescript-eslint/consistent-type-imports': 'off',
     '@typescript-eslint/consistent-type-assertions': 'warn',
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',

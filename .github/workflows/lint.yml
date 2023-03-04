@@ -1,0 +1,17 @@
+# Docs: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Lint
+
+on:
+  push:
+    branches: ['master', 'develop']
+  pull_request:
+    branches: ['master', 'develop']
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: yarn
+      - run: npx eslint src

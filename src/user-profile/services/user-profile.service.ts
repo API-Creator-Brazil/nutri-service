@@ -8,9 +8,9 @@ import { transformUpdateUserPersonalDataToPrismaUpdateUserPayload } from '../dat
 
 @Injectable()
 export class UserProfileService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(): Promise<Array<UserProfile>> {
+  async findAll(): Promise<UserProfile[]> {
     const users = await this.prisma.user.findMany({
       where: {
         status: { not: UserActivityStatus.REMOVED },
@@ -30,7 +30,7 @@ export class UserProfileService {
       include: { personalData: true },
     })
 
-    if (!user) {
+    if (user === null) {
       return null
     }
 
@@ -49,11 +49,11 @@ export class UserProfileService {
         },
       })
 
-      if (!activeUser) {
+      if (activeUser === null) {
         return null
       }
 
-      return transaction.user.update({
+      return await transaction.user.update({
         data: transformUpdateUserPersonalDataToPrismaUpdateUserPayload(
           updateUserProfileInput,
         ),
@@ -62,14 +62,14 @@ export class UserProfileService {
       })
     })
 
-    if (!updatedUser) {
+    if (updatedUser === null) {
       return null
     }
 
     return transformPrismaUserToUserGraphQLEntity(updatedUser)
   }
 
-  async remove(id: string): Promise<UserProfile> {
+  async remove(id: string): Promise<UserProfile | null> {
     const removedUser = await this.prisma.$transaction(async (transaction) => {
       const activeUser = await transaction.user.findFirst({
         where: {
@@ -78,18 +78,18 @@ export class UserProfileService {
         },
       })
 
-      if (!activeUser) {
+      if (activeUser === null) {
         return null
       }
 
-      return transaction.user.update({
+      return await transaction.user.update({
         data: { status: UserActivityStatus.REMOVED },
         where: { id },
         include: { personalData: true },
       })
     })
 
-    if (!removedUser) {
+    if (removedUser === null) {
       return null
     }
 

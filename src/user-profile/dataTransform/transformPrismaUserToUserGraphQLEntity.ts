@@ -8,12 +8,28 @@ type UserWithPersonalData = User & {
 export const transformPrismaUserToUserGraphQLEntity = (
   user: UserWithPersonalData,
 ): UserProfile => {
+  const name = findPersonalData(user, UserPersonalDataType.NAME)
+  const email = findPersonalData(user, UserPersonalDataType.EMAIL)
+  const phone = findPersonalData(user, UserPersonalDataType.PHONE)
+
+  if (name === undefined) {
+    throw new Error('Expected name to exist')
+  }
+
+  if (email === undefined) {
+    throw new Error('Expected name to exist')
+  }
+
+  if (phone === undefined) {
+    throw new Error('Expected name to exist')
+  }
+
   return {
     id: user.id,
     status: user.status,
-    name: findPersonalData(user, UserPersonalDataType.NAME),
-    email: findPersonalData(user, UserPersonalDataType.EMAIL),
-    phone: findPersonalData(user, UserPersonalDataType.PHONE),
+    name,
+    email,
+    phone,
     cpf: findPersonalData(user, UserPersonalDataType.CPF),
     birthday: findPersonalData(user, UserPersonalDataType.BIRTHDAY),
   }
@@ -25,7 +41,7 @@ const findPersonalData = (
 ): string | undefined => {
   const data = user.personalData.find((data) => data.type === type)
 
-  if (!data) {
+  if (data === undefined) {
     return undefined
   }
 

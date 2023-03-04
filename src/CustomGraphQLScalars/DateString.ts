@@ -8,6 +8,7 @@ export function validate(value: unknown): string | never {
   ) {
     throw new Error('invalid date')
   }
+
   return value
 }
 

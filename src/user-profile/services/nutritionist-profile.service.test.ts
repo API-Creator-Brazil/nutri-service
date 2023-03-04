@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+
 import { Test, TestingModule } from '@nestjs/testing'
 import {
-  User,
   UserAccessType,
   UserActivityStatus,
   UserPersonaDataPriority,
-  UserPersonalData,
   UserPersonalDataType,
 } from '@prisma/client'
 import { PrismaService } from '../../PrismaService/PrismaService'
@@ -52,7 +52,7 @@ describe('NutricionistProfileService', () => {
             data: [{ type: accessType ?? UserAccessType.NUTRITIONIST }],
           },
         },
-        status: profile.status as UserActivityStatus,
+        status: profile.status,
       },
       include: { personalData: true },
     })
@@ -150,8 +150,8 @@ describe('NutricionistProfileService', () => {
       expect(users.length).toBe(1)
 
       expect(users).toContainEqual({
-        id: expect.anything(),
         ...defaultUser,
+        id: expect.anything(),
       })
     })
 
@@ -171,13 +171,13 @@ describe('NutricionistProfileService', () => {
       expect(users.length).toBe(2)
 
       expect(users).toContainEqual({
-        id: expect.anything(),
         ...defaultUser,
+        id: expect.anything(),
       })
 
       expect(users).toContainEqual({
-        id: expect.anything(),
         ...otherUser,
+        id: expect.anything(),
       })
     })
 
@@ -222,8 +222,8 @@ describe('NutricionistProfileService', () => {
       )
 
       expect(existingUser).toEqual({
-        id: expect.anything(),
         ...defaultUser,
+        id: expect.anything(),
       })
     })
 

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+
 import { Test, TestingModule } from '@nestjs/testing'
 import {
   UserAccessType,
@@ -78,8 +80,8 @@ describe('UserProfileService', () => {
       expect(users.length).toBe(1)
 
       expect(users).toContainEqual({
-        id: expect.anything(),
         ...defaultUser,
+        id: expect.anything(),
       })
     })
 
@@ -99,13 +101,13 @@ describe('UserProfileService', () => {
       expect(users.length).toBe(2)
 
       expect(users).toContainEqual({
-        id: expect.anything(),
         ...defaultUser,
+        id: expect.anything(),
       })
 
       expect(users).toContainEqual({
-        id: expect.anything(),
         ...otherUser,
+        id: expect.anything(),
       })
     })
 
@@ -140,8 +142,8 @@ describe('UserProfileService', () => {
       const existingUser = await userProfileService.findOne(createdUser.id)
 
       expect(existingUser).toEqual({
-        id: expect.anything(),
         ...defaultUser,
+        id: expect.anything(),
       })
     })
 
@@ -188,6 +190,10 @@ describe('UserProfileService', () => {
         },
       )
 
+      if (updatedUser === null) {
+        throw new Error('expected user to be updated')
+      }
+
       expect(updatedUser[fieldName]).toBe(newValue)
     })
   })
@@ -207,8 +213,8 @@ describe('UserProfileService', () => {
       const removedUser = await userProfileService.remove(createdUser.id)
 
       expect(removedUser).toEqual({
-        id: expect.anything(),
         ...defaultUser,
+        id: expect.anything(),
         status: UserActivityStatus.REMOVED,
       })
     })
