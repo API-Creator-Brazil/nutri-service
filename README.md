@@ -7,28 +7,27 @@
 
 Service that manages nutritionists application
 
-# Building
+# Configuration
+
+Set a `.env` file following `.env.example`.
+
+# Running in local environment
 
 ```bash
-> yarn
-> npx nest build
+# install dependencies
+yarn
+# start docker compose services
+docker compose up -d
+# run application
+npx nest start
+# remove docker compose
+docker compose down
 ```
 
 # Testing
 
 ```bash
-> export COMPOSE_FILE=docker/infra.yml
-> docker compose up -d
-> sleep 1
-> npx jest --runInBand
-> docker compose down
-```
-
-# Executing
-
-```bash
-> export COMPOSE_FILE=docker/infra.yml
-> docker compose up -d
-> npx nest start
-> docker compose down
+docker compose up -d
+npx jest --runInBand
+docker compose down
 ```
