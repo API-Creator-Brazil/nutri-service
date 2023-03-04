@@ -19,4 +19,4 @@ DROP TYPE public."UserInfoType" cascade;
 DROP TYPE public."UserAccessType" cascade;
 
 -- Drop migrations baseline
-DROP table public."_prisma_migrations";
+DROP table public."_prisma_migrations" cascade;
