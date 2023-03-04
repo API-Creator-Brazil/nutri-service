@@ -1,0 +1,94 @@
+// Prisma schema file 
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("NUTRITION_DATABASE_URL")
+}
+
+// ==============
+//   User Model
+// ==============
+model User {
+  id                    String                  @id @default(uuid()) @db.Uuid
+  personalData          UserPersonalData[]
+  access                UserAccess[]
+  UserExtenalIdentifier UserExtenalIdentifier[]
+
+  status UserActivityStatus
+
+  createdAt DateTime @default(now()) @map("created_at")
+  udpatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
+enum UserActivityStatus {
+  ACTIVE // User may use the system
+  BLOCKED // User may not use the system, but is visible
+  REMOVED // User is not visible and database should ignore this user
+}
+
+model UserExtenalIdentifier {
+  id String @id @default(uuid()) @db.Uuid
+
+  externalId String
+  source     UserExternalSource
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.Uuid
+}
+
+enum UserExternalSource {
+  TURTLE_GUARD
+}
+
+// Generic user personal data
+model UserPersonalData {
+  id String @id @default(uuid()) @db.Uuid
+
+  value       String
+  description String?
+  complement  String?
+  priority    UserPersonaDataPriority @default(DEFAULT)
+  type        UserPersonalDataType
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.Uuid
+}
+
+enum UserPersonaDataPriority {
+  LOW
+  DEFAULT
+  HIGH
+}
+
+enum UserPersonalDataType {
+  NAME
+  EMAIL
+  CPF
+  PASSPORT
+  PHONE
+  BIRTHDAY
+
+  @@map("UserInfoType")
+}
+
+// Generic user access
+model UserAccess {
+  id String @id @default(uuid()) @db.Uuid
+
+  type UserAccessType
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.Uuid
+}
+
+enum UserAccessType {
+  ADMIN
+
+  NUTRITIONIST
+  PATIENT
+}

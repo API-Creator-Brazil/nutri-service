@@ -1,0 +1,98 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserProfile {
+  """User id"""
+  id: UUID!
+
+  """User name"""
+  name: FullName!
+
+  """User email"""
+  email: Email!
+
+  """User phone"""
+  phone: Phone!
+
+  """User cpf"""
+  cpf: CPF!
+
+  """User birthday"""
+  birthday: DateString!
+
+  """User status"""
+  status: UserActivityStatusEnum!
+}
+
+"""UUID parser"""
+scalar UUID
+
+"""FullName parser"""
+scalar FullName
+
+"""Email parser"""
+scalar Email
+
+"""Phone parser"""
+scalar Phone
+
+"""CPF parser"""
+scalar CPF
+
+"""Date parser DD/M/MYYY"""
+scalar DateString
+
+"""User activity status"""
+enum UserActivityStatusEnum {
+  ACTIVE
+  BLOCKED
+  REMOVED
+}
+
+type Query {
+  userProfile(id: Int!): UserProfile!
+}
+
+type Mutation {
+  createNutritionistProfile(createNutritionistProfileInput: CreateUserProfileInput!): UserProfile!
+  updateUserProfile(updateUserProfileInput: UpdateUserProfileInput!): UserProfile!
+  removeUserProfile(id: String!): UserProfile!
+}
+
+input CreateUserProfileInput {
+  """User name"""
+  name: FullName!
+
+  """User email"""
+  email: Phone!
+
+  """User phone"""
+  phone: CPF!
+
+  """User cpf"""
+  cpf: CPF
+
+  """User birthday"""
+  birthday: DateString
+}
+
+input UpdateUserProfileInput {
+  """User name"""
+  name: FullName!
+
+  """User email"""
+  email: Phone!
+
+  """User phone"""
+  phone: CPF!
+
+  """User cpf"""
+  cpf: CPF
+
+  """User birthday"""
+  birthday: DateString
+
+  """user id"""
+  id: UUID!
+}
