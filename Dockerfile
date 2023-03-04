@@ -3,7 +3,7 @@ WORKDIR /app
 
 COPY . .
 RUN yarn
-RUN npx prisma migrate dev
+RUN npx prisma migrate deploy
 RUN npx nest build
 
 CMD ["node", "dist/main"]
