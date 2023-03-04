@@ -11,6 +11,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      NUTRITION_DATABASE_URL: postgres://test-user:test-pass@localhost:5432/test-db?schema=public
     steps:
       - uses: actions/checkout@v3
       - run: yarn
